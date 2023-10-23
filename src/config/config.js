@@ -4,7 +4,7 @@ dotenv.config();
 
 export const config ={
     server:{
-        secretSessions: process.env.SECRET_SESSION
+        secretSessions: process.env.SECRET_SESSIONS
     },
     mongo:{
         url: process.env.MONGO_URL

@@ -44,7 +44,7 @@ app.use(session({
         ttl:3000,
         mongoUrl:config.mongo.url
     }),
-    secret:"secretSessionCoder",
+    secret:config.server.secretSessions,
     resave:true,
     saveUninitialized:true
 }));
