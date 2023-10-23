@@ -1,0 +1,46 @@
+/* Estilos generales para la vista de detalles del producto */
+.product-details {
+    margin: 20px;
+    background-color: #f9f9f9; /* Color de fondo estilo "card" */
+    border: 1px solid #ddd; /* Borde estilo "card" */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el contenedor de detalles e imagen */
+.product-info {
+    display: flex; /* Activa el diseño flexible para alinear elementos */
+}
+
+.product-title{
+    text-align: center;
+}
+/* Estilos para los detalles del producto */
+.product-text {
+    flex: 1; /* Los detalles ocupan el espacio restante */
+    padding-right: 20px; /* Espacio entre los detalles y la imagen */
+}
+
+/* Estilos para la descripción del producto */
+.product-description {
+    font-style: italic; /* Estilo de fuente cursiva para la descripción */
+}
+
+/* Estilos para la imagen del producto */
+.product-image-container {
+    flex: 1; /* La imagen ocupa el espacio restante */
+    text-align: center; 
+    margin: 20px;/* Alinea la imagen al centro verticalmente */
+}
+
+/* Estilos para la imagen del producto */
+.product-image {
+    max-height: 500px; /* Altura máxima de la imagen */
+    margin: 0 auto; /* Centrar la imagen horizontalmente */
+}
+
+/* Estilos para el botón "Agregar al carrito" */
+.add-to-cart {
+    width: 100%; /* Ancho completo del botón */
+}
+
+

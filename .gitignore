@@ -1,0 +1,8 @@
+#Dependencias de node
+node_modules
+
+#Archivos Basura
+papelera.txt
+
+#Credenciales
+.env

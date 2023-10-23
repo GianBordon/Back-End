@@ -1,0 +1,128 @@
+[
+  {
+    "id": 2,
+    "title": "Remera Roja",
+    "description": "Una elegante remera roja.",
+    "code": "REM002",
+    "price": 24.99,
+    "stock": 30,
+    "category": "Remeras",
+    "status": true
+  },
+  {
+    "id": 3,
+    "title": "Jeans Clásicos",
+    "description": "Unos jeans clásicos para cualquier ocasión.",
+    "code": "JEANS001",
+    "price": 39.99,
+    "stock": 20,
+    "category": "Jeans",
+    "status": true
+  },
+  {
+    "id": 4,
+    "title": "Buzo Deportivo",
+    "description": "Un cómodo buzo deportivo.",
+    "code": "BUZO001",
+    "price": 29.99,
+    "stock": 15,
+    "category": "Buzos",
+    "status": true
+  },
+  {
+    "id": 5,
+    "title": "Remera Blanca",
+    "description": "Una sencilla remera blanca.",
+    "code": "REM003",
+    "price": 14.99,
+    "stock": 40,
+    "category": "Remeras",
+    "status": true
+  },
+  {
+    "id": 7,
+    "title": "Buzo con Capucha",
+    "description": "Un buzo cómodo con capucha.",
+    "code": "BUZO002",
+    "price": 32.99,
+    "stock": 18,
+    "category": "Buzos",
+    "status": true
+  },
+  {
+    "id": 8,
+    "title": "Remera a Rayas",
+    "description": "Una remera a rayas elegante.",
+    "code": "REM004",
+    "price": 18.99,
+    "stock": 35,
+    "category": "Remeras",
+    "status": true
+  },
+  {
+    "id": 9,
+    "title": "Jeans Rasgados",
+    "description": "Jeans con efecto rasgado.",
+    "code": "JEANS003",
+    "price": 24.99,
+    "stock": 22,
+    "category": "Jeans",
+    "status": true
+  },
+  {
+    "id": 10,
+    "title": "Buzo Elegante",
+    "description": "Un buzo elegante para ocasiones especiales.",
+    "code": "BUZO003",
+    "price": 37.99,
+    "stock": 12,
+    "category": "Buzos",
+    "status": true
+  },
+  {
+    "id": 11,
+    "title": "Nuevo Producto",
+    "description": "Descripción del producto",
+    "code": "P12345",
+    "price": 29.99,
+    "status": true,
+    "stock": 50,
+    "category": "Electrónica"
+  },
+  {
+    "id": 13,
+    "title": "Buzo Violeta",
+    "description": "Un cómodo buzo violeta",
+    "code": "BUZO008",
+    "price": 39.99,
+    "status": true,
+    "stock": 10,
+    "category": "Buzos",
+    "thumbnails": []
+  },
+  {
+    "id": 14,
+    "title": "Remera Fucsia",
+    "description": "Una hermosa remera de color fucsia.",
+    "code": "RF001",
+    "price": 19.99,
+    "status": true,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": [
+      "ruta_imagen_1.jpg",
+      "ruta_imagen_2.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Buzo Negro",
+    "description": "Un cómodo buzo de color negro.",
+    "code": "BN001",
+    "price": 29.99,
+    "status": true,
+    "stock": 30,
+    "category": "Ropa",
+    "thumbnails": []
+  }
+]

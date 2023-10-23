@@ -1,0 +1,21 @@
+<div class="product-grid">
+    <div class="product-details">
+        <h2 class="product-title">{{product.title}}</h2>
+        <div class="product-info">
+            <div class="product-text">
+                <p class="product-description">Descripción: {{product.description}}</p>
+                <p>Categoría: {{product.category}}</p>
+                <p>Stock: {{product.stock}}</p>
+                <p class="product-price">Precio: ${{product.price}}</p>
+            </div>
+            <div class="product-image-container">
+                <img class="product-image" src="{{product.thumbnail}}" alt="{{product.title}}">
+            </div>
+        </div>
+        <form action="/carts/{{cartId}}/products/{{this._id}}" method="POST">
+            <button type="submit" class="add-to-cart">Agregar al carrito</button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/productsDetail.js"></script>
