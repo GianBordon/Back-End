@@ -70,7 +70,7 @@ export const initializePassport = () =>{
                 const newUser = {
                     first_name:profile._json.name,
                     email:profile.username,
-                    password:createHash(profile.id)
+                    password:""
                 };
                 console.log(newUser);
                 const userCreated = await usersModel.create(newUser);
