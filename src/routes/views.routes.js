@@ -6,7 +6,7 @@ const router = Router();
 
 
 // Ruta para mostrar la lista de productos
-router.get('/', async (req, res) => {
+router.get('/loginView', async (req, res) => {
     try {
         const style = "loginView.css";
         res.render("loginView", {style});
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 });
 
 // Ruta para mostrar la lista de productos
-router.get('/products', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const { limit = 12, page = 1,sort = 'asc', category, stock} = req.query;
         const query = {};
@@ -104,9 +104,11 @@ router.get("/profile",(req,res)=>{
         const userEmail = req.user.email;
         const userRole = req.user.role;
         const userName = req.user.first_name;
-        res.render("profileView", { userEmail, userName, userRole });
+        const userLast_Name = req.user.last_name;
+        const userAge = req.user.age;
+        res.render("profileView", { userEmail, userName, userRole, userAge, userLast_Name});
     } else {
-        res.redirect("/");
+        res.redirect("/loginView");
     }
 });
 export {router as viewsRouter}

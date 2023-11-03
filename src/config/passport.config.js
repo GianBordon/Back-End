@@ -4,6 +4,7 @@ import githubStrategy from "passport-github2";
 import { createHash, inValidPassword } from "../utils.js";
 import { usersModel } from "../dao/mongo/models/users.model.js";
 import { config } from "./config.js";
+import { usersService } from "../dao/index.js"
 
 export const initializePassport = () =>{
     // Estrategia de registro de usuario 
@@ -13,18 +14,20 @@ export const initializePassport = () =>{
             usernameField: "email",
         },
         async (req,username,password,done)=>{
-            const {first_name} = req.body;
+            const {first_name,last_name,age} = req.body;
             try {
-                const user = await usersModel.findOne({email:username});
+                const user = await usersService.getUserByEmail(username);
                 if(user){
                     return done(null, false);
                 } 
                 const newUser = {
                     first_name,
+                    last_name,
+                    age,
                     email:username,
                     password:createHash(password)
                 };
-                const userCreated = await usersModel.create(newUser);
+                const userCreated = await usersService.createUser(newUser);
                 return done(null, userCreated);
             } catch (error) {
                 return done(error)
@@ -38,7 +41,7 @@ export const initializePassport = () =>{
         },
         async (username,password,done)=>{
             try {
-                const user = await usersModel.findOne({email:username});
+                const user = await usersService.getUserByEmail(username);
                 if(!user){
                     return done(null, false);
                 } 
@@ -84,7 +87,7 @@ export const initializePassport = () =>{
             done(null, user._id);
         });
     passport.deserializeUser(async(id,done)=>{
-            const user = await usersModel.findById(id);
+            const user = await usersService.getUserById(id);
             done(null,user);
         });
     };

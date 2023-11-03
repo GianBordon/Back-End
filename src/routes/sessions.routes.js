@@ -18,7 +18,7 @@ router.get('/fail-signup', (req,res)=>{
 router.post('/login', passport.authenticate("loginLocalStrategy", {
     failureRedirect:"/api/sessions/fail-login"
 }), async (req, res) => {
-    res.redirect("/products")
+    res.redirect("/")
 });
 router.get('/fail-login', (req,res)=>{
     res.render('loginView', { error: 'No se pudo iniciar sesion para el usuario' });
@@ -31,7 +31,7 @@ router.get("/signup-github", passport.authenticate("signupGithubStrategy"));
 router.get(config.github.callbackUrl, passport.authenticate("signupGithubStrategy",{
     failureRedirect:"/api/sessions/fail-signup"
 }), (req,res)=>{
-    res.redirect("/products");
+    res.redirect("/");
 });
 
 // Ruta de Logout
