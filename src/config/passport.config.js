@@ -2,9 +2,9 @@ import passport from "passport";
 import localStrategy from "passport-local";
 import githubStrategy from "passport-github2";
 import { createHash, inValidPassword } from "../utils.js";
-import { usersModel } from "../dao/mongo/models/users.model.js";
+import { usersModel } from "../dao/managers/mongo/models/users.model.js";
 import { config } from "./config.js";
-import { usersService } from "../dao/index.js"
+import { UserService } from "../services/users.service.js"
 
 export const initializePassport = () =>{
     // Estrategia de registro de usuario 
@@ -16,7 +16,7 @@ export const initializePassport = () =>{
         async (req,username,password,done)=>{
             const {first_name,last_name,age} = req.body;
             try {
-                const user = await usersService.getUserByEmail(username);
+                const user = await UserService.getUserByEmail(username);
                 if(user){
                     return done(null, false);
                 } 
@@ -27,7 +27,7 @@ export const initializePassport = () =>{
                     email:username,
                     password:createHash(password)
                 };
-                const userCreated = await usersService.createUser(newUser);
+                const userCreated = await UserService.createUser(newUser);
                 return done(null, userCreated);
             } catch (error) {
                 return done(error)
@@ -41,7 +41,7 @@ export const initializePassport = () =>{
         },
         async (username,password,done)=>{
             try {
-                const user = await usersService.getUserByEmail(username);
+                const user = await UserService.getUserByEmail(username);
                 if(!user){
                     return done(null, false);
                 } 
@@ -73,7 +73,7 @@ export const initializePassport = () =>{
                 const newUser = {
                     first_name:profile._json.name,
                     email:profile.username,
-                    password:""
+                    password:" "
                 };
                 console.log(newUser);
                 const userCreated = await usersModel.create(newUser);
@@ -87,7 +87,7 @@ export const initializePassport = () =>{
             done(null, user._id);
         });
     passport.deserializeUser(async(id,done)=>{
-            const user = await usersService.getUserById(id);
+            const user = await UserService.getUserById(id);
             done(null,user);
         });
     };

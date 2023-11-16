@@ -1,62 +1,18 @@
 import { Router } from "express";
-import { productsService } from "../dao/index.js";
+import { ProductsController } from "../controllers/products.controller.js";
 
 const router = Router();
 
     // Ruta raíz GET para listar todos los productos (con limitación opcional)
-    router.get("/",async(req,res)=>{
-        try {
-            const result = await productsService.getProducts();
-            res.json({status:"success", data:result});
-        } catch (error) {
-            res.status(500).json({status:"error", message:error.message});
-        }
-    });
-
+    router.get("/", ProductsController.getProducts);
     // Ruta POST para agregar un nuevo producto
-    router.post("/", async(req,res)=>{
-        try {
-            const product = req.body;
-            const result = await productsService.createProduct(product);
-            res.json({status:"success", result});
-        } catch (error) {
-            res.status(500).json({status:"error", message:error.message});
-        }
-    });
-
+    router.post("/", ProductsController.createProduct);
     // Ruta GET para obtener un producto por ID
-    router.get("/:productId", async(req,res)=>{
-        try {
-            const productId = req.params.productId.toString();
-            const result = await productsService.getProductById(productId);
-            res.json({status:"success", data:result});
-        } catch (error) {
-            res.status(500).json({status:"error", message:error.message});
-        }
-    });
-
+    router.get("/:productId", ProductsController.getProductById);
     // Ruta PUT para actualizar un producto por su ID
-    router.put("/:productId", async(req,res)=>{
-        try {
-            const product = req.body;
-            const productId = req.params.productId.toString();
-            const result = await productsService.updateProduct(productId,product);
-            res.json({status:"success", data:result});
-        } catch (error) {
-            res.status(500).json({status:"error", message:error.message});
-        }
-    });
-
+    router.put("/:productId", ProductsController.updateProduct);
     // Ruta DELETE para eliminar un producto por su ID
-    router.delete("/:productId", async(req,res)=>{
-        try {
-            const productId = req.params.productId.toString();
-            const result = await productsService.deleteProduct(productId);
-            res.json({status:"success", data:result});
-        } catch (error) {
-            res.status(500).json({status:"error", message:error.message});
-        }
-    });
+    router.delete("/:productId", ProductsController.deleteProduct);
 
 export { router as productsRouter };
 

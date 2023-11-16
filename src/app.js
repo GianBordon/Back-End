@@ -7,7 +7,6 @@ import passport from "passport";
 import { engine } from 'express-handlebars';
 import { __dirname } from "./utils.js";
 import { Server } from 'socket.io'; 
-import { connectDB } from './config/dbConnection.js';
 import { config  } from "./config/config.js";
 import { initializePassport } from "./config/passport.config.js";
 
@@ -29,9 +28,6 @@ app.use(express.urlencoded({extended:true}));
 
 //servidor de express con el protocolo http
 const httpServer = app.listen(port, () => console.log(`Servidor Express escuchando en el puerto ${port}`));
-
-// Conexion base de datos 
-connectDB();
 
 //configuracion del motor de plantillas
 app.engine('.hbs', engine({extname: '.hbs'}));
