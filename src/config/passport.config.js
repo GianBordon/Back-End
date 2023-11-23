@@ -17,6 +17,7 @@ export const initializePassport = () =>{
             const {first_name,last_name,age} = req.body;
             try {
                 const user = await UserService.getUserByEmail(username);
+                console.log("Usuario autenticado:", user);
                 if(user){
                     return done(null, false);
                 } 
@@ -63,7 +64,6 @@ export const initializePassport = () =>{
         },
         async(accessToken,refreshToken,profile,done)=>{
             try {
-                // console.log("profile",profile);
                 const user = await usersModel.findOne({email:profile.username});
                 if(user){
                     //el usuario ya esta registrado

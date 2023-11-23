@@ -15,4 +15,5 @@ router.get('/carrito/:cid', ViewsController.getCart);
 router.get("/signup", ViewsController.singUp);
 // Ruta para ver el Perfil del usuario 
 router.get("/profile", ViewsController.profile);
+
 export {router as viewsRouter}

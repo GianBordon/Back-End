@@ -1,4 +1,4 @@
-import { usersDao } from "../dao/factoy.js"
+import { usersDao } from "../dao/factory.js"
 
 export class UserService{
 

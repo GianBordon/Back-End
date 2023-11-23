@@ -3,6 +3,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import path from "path";
 import cookieParser from "cookie-parser"
+import bodyParser from 'body-parser';
 import passport from "passport";
 import { engine } from 'express-handlebars';
 import { __dirname } from "./utils.js";
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 //servidor de express con el protocolo http
 const httpServer = app.listen(port, () => console.log(`Servidor Express escuchando en el puerto ${port}`));

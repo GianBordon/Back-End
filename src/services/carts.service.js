@@ -1,4 +1,4 @@
-import { cartsDao } from "../dao/factoy.js"
+import { cartsDao } from "../dao/factory.js"
 
 export class CartService{
 

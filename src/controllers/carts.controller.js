@@ -1,4 +1,7 @@
 import { CartService } from "../services/carts.service.js";
+import { ProductService } from "../services/products.service.js";
+import {v4 as uuidv4} from 'uuid';
+
 
 export class CartController {
 
@@ -74,13 +77,48 @@ export class CartController {
         }
     };
 
-    static addProductCart = async (req, res) => {
+    static addProductCart = async(req,res)=>{
         try {
-            const { cid: cartId, pid: productId } = req.params;
-            await CartService.addProduct(cartId, productId, );
-            res.json({ message: 'Producto agregado al carrito con éxito' });
+            const {cid:cartId,pid:productId} = req.params;
+            const cart = await CartService.getCartById(cartId);
+            const product = await ProductService.getProduct(productId);
+            const result = await CartService.addProduct(cartId,productId);
+            res.json({status:"success", result});
         } catch (error) {
-            res.status(500).json({ error: 'Error al agregar el producto al carrito' });
-        };
+            res.json({error:error.message});
+        }
     };
+
+    static purchaseCart = async(req,res)=>{
+        const ticketProducts = [];
+        const rejectProducts = [];
+        try {
+            const {cid: cartId} = req.params;
+            const cart = await CartService.getCartById(cartId);
+            if(cart.products.length){
+                for(let i=0;i<cart.products.length;i++){ 
+                    const cartProduct = cart.products[i]
+                    const productInfo = cartProduct.productId;
+                    if(cartProduct.quantity <= productInfo.stock){
+                        ticketProducts.push(cartProduct)
+                    }else {
+                        rejectProducts.push(cartProduct)
+                    }
+                };
+                //console.log("ticketProducts", ticketProducts)
+                //console.log("rejectProducts", rejectProducts)
+                const newTicket = {
+                    code: uuidv4(),
+                    purchase_datetime: new Date(),
+                    amount: 500,
+                    purchaser:req.user.email
+                };
+                console.log("newTicket", newTicket)
+            } else {
+                res.json({status:"error",message:"El carrito esta vacio"})
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error al mostrar el ticket del carrito' });
+        }
+    }
 }

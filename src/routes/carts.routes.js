@@ -20,6 +20,9 @@ router.delete('/:cid', CartController.deleteProductsCart);
 // Ruta para agregar un producto al carrito
 router.post("/:cid/products/:pid", CartController.addProductCart);
 
+router.post("/:cid/purchase", CartController.purchaseCart);
+
+
 
 export { router as cartsRouter };
 
