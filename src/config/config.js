@@ -6,6 +6,7 @@ export const config ={
     server:{
         secretSessions: process.env.SECRET_SESSIONS,
         persistence: process.env.PERSISTENCE,
+        port:process.env.PORT
     },
     mongo:{
         url: process.env.MONGO_URL
@@ -14,5 +15,14 @@ export const config ={
         callbackUrl: process.env.GITHUB_CALLBACK_URL,
         clientId: process.env.GITHUB_CLIENTE_ID,
         clientSecret: process.env.GITHUB_CLIENTE_SECRET
+    },
+    gmail:{
+        account:process.env.GMAIL_ACCOUNT,
+        password:process.env.GMAIL_PASSWORD
+    },
+    twilio:{
+        account:process.env.TWILIO_ACCOUNT_ID,
+        token:process.env.TWILIO_TOKEN,
+        phone:process.env.TWILIO_PHONE
     }
 }

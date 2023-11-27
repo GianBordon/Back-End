@@ -15,6 +15,7 @@ import { viewsRouter } from './routes/views.routes.js';
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { productsRouter } from './routes/products.routes.js';
 import { cartsRouter } from './routes/carts.routes.js';
+import { messagesRouter } from './routes/messages.routes.js';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -60,6 +61,7 @@ app.use(viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use("/api/sessions", sessionsRouter);
+app.use("/api/messages", messagesRouter);
 
 // Configurar WebSocket
 const io = new Server(httpServer);
