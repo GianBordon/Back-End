@@ -1,5 +1,6 @@
 import { ProductService } from "../services/products.service.js"
 import { CartService } from "../services/carts.service.js";
+import { ProfileDto } from "../dao/dto/profile.dto.js";
 
 export class ViewsController{
     
@@ -93,15 +94,17 @@ export class ViewsController{
     };
     
     static profile = (req,res)=>{
-        if(req.user?.email){
-            const userEmail = req.user.email;
-            const userRole = req.user.role;
-            const userName = req.user.first_name;
-            const userLast_Name = req.user.last_name;
-            const userAge = req.user.age;
-            res.render("profileView", { userEmail, userName, userRole, userAge, userLast_Name});
-        } else {
-            res.redirect("/loginView");
+        try {
+            if (req.user?.email) {
+                const userInfo = req.user;
+                const profileDto = new ProfileDto(userInfo);
+                res.render("profileView", { profile: profileDto });
+            } else {
+                res.redirect("/loginView");
+            }
+        } catch (error) {
+            console.error("Error al obtener y procesar el perfil:", error);
+            res.status(500).render("errorView", { error: "Error al obtener el perfil del usuario" });
         }
     };
 }

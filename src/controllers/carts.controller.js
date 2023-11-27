@@ -1,5 +1,6 @@
 import { CartService } from "../services/carts.service.js";
 import { ProductService } from "../services/products.service.js";
+import { TicketService } from "../services/ticket.service.js";
 import {v4 as uuidv4} from 'uuid';
 
 
@@ -92,6 +93,7 @@ export class CartController {
     static purchaseCart = async(req,res)=>{
         const ticketProducts = [];
         const rejectProducts = [];
+        let totalAmount = 0;
         try {
             const {cid: cartId} = req.params;
             const cart = await CartService.getCartById(cartId);
@@ -107,12 +109,18 @@ export class CartController {
                 };
                 //console.log("ticketProducts", ticketProducts)
                 //console.log("rejectProducts", rejectProducts)
+                for (let i = 0; i < ticketProducts.length; i++) {
+                    const cartProduct = ticketProducts[i];
+                    const productInfo = cartProduct.productId;
+                    totalAmount += cartProduct.quantity * productInfo.price;
+                }
                 const newTicket = {
                     code: uuidv4(),
                     purchase_datetime: new Date(),
-                    amount: 500,
+                    amount: totalAmount,
                     purchaser:req.user.email
                 };
+                await TicketService.createTicket(newTicket);
                 console.log("newTicket", newTicket)
             } else {
                 res.json({status:"error",message:"El carrito esta vacio"})

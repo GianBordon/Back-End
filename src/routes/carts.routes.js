@@ -19,10 +19,8 @@ router.put('/:cid/products/:pid', CartController.updateQuantityCart);
 router.delete('/:cid', CartController.deleteProductsCart);
 // Ruta para agregar un producto al carrito
 router.post("/:cid/products/:pid", CartController.addProductCart);
-
+// Ruta para generar un ticket
 router.post("/:cid/purchase", CartController.purchaseCart);
-
-
 
 export { router as cartsRouter };
 

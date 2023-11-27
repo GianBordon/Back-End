@@ -11,9 +11,9 @@ const router = Router();
     // Ruta GET para obtener un producto por ID
     router.get("/:productId", ProductsController.getProductById);
     // Ruta PUT para actualizar un producto por su ID
-    router.put("/:productId", ProductsController.updateProduct);
+    router.put("/:productId",checkRole(["admin"]),  ProductsController.updateProduct);
     // Ruta DELETE para eliminar un producto por su ID
-    router.delete("/:productId", ProductsController.deleteProduct);
+    router.delete("/:productId",checkRole(["admin"]),  ProductsController.deleteProduct);
 
 export { router as productsRouter };
 

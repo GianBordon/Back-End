@@ -2,6 +2,7 @@ import passport from "passport";
 import { Router } from "express";
 import { config } from "../config/config.js";
 import { SessionsController } from "../controllers/sessions.controller.js";
+import { ViewsController } from "../controllers/views.controller.js";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.get('/fail-signup', SessionsController.failSignUp);
 // Rutas de Loguin
 router.post('/login', passport.authenticate("loginLocalStrategy", {
     failureRedirect:"/api/sessions/fail-login"
-}), SessionsController.login);
+}), ViewsController.showProducts);
 router.get('/fail-login', SessionsController.failLogin);
 //Ruta de solicitud registro con github
 router.get("/signup-github", passport.authenticate("signupGithubStrategy"));
@@ -21,7 +22,6 @@ router.get("/signup-github", passport.authenticate("signupGithubStrategy"));
 router.get(config.github.callbackUrl, passport.authenticate("signupGithubStrategy",{
     failureRedirect:"/api/sessions/fail-signup"
 }), SessionsController.failSignUpGitHub);
-
 // Ruta de Logout
 router.get("/logout", SessionsController.logOut);
 

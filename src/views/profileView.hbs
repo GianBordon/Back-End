@@ -3,11 +3,10 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="card-title">Bienvenid@ {{userName}}</h1>
-                    <p class="card-text">Tu apellido: {{userLast_Name}}</p>
-                    <p class="card-text">Tu edad: {{userAge}}</p>
-                    <p class="card-text">Tu correo: {{userEmail}}</p>
-                    <p class="card-text">Tu rol: {{userRole}}</p>
+                    <h1 class="card-title">Bienvenid@ {{profile.full_name}}</h1>
+                    <p class="card-text">Tu edad: {{profile.age}}</p>
+                    <p class="card-text">Tu correo: {{profile.email}}</p>
+                    <p class="card-text">Tu rol: {{profile.role}}</p>
                     <a href="/api/sessions/logout" class="btn btn-danger">Cerrar sesión</a>
                 </div>
             </div>
