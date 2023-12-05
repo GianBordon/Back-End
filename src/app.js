@@ -10,12 +10,14 @@ import { __dirname } from "./utils.js";
 import { Server } from 'socket.io'; 
 import { config  } from "./config/config.js";
 import { initializePassport } from "./config/passport.config.js";
+import { errorHandler } from './middlewares/errorHandler.js';
 
 import { viewsRouter } from './routes/views.routes.js';
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { productsRouter } from './routes/products.routes.js';
 import { cartsRouter } from './routes/carts.routes.js';
 import { messagesRouter } from './routes/messages.routes.js';
+import { mockRouter } from './routes/mocks.routes.js';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -62,7 +64,10 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/messages", messagesRouter);
+app.use("/api/mocks", mockRouter);
 
+// Midelware de Errores
+app.use(errorHandler);
 // Configurar WebSocket
 const io = new Server(httpServer);
 

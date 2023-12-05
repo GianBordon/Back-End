@@ -5,6 +5,9 @@ import { createHash, inValidPassword } from "../utils.js";
 import { usersModel } from "../dao/managers/mongo/models/users.model.js";
 import { config } from "./config.js";
 import { UserService } from "../services/users.service.js"
+import { CustomError } from "../services/customError.service.js";
+import { userCreateError } from "../services/userCreateError.service.js";
+import { EError } from "../enums/EError.js";
 
 export const initializePassport = () =>{
     // Estrategia de registro de usuario 
@@ -15,9 +18,16 @@ export const initializePassport = () =>{
         },
         async (req,username,password,done)=>{
             const {first_name,last_name,age} = req.body;
+            if(!first_name || !last_name || !age || !username){
+                CustomError.createError({
+                    name:"Create user error",
+                    cause: userCreateError(req.body),
+                    message:"Datos invalidos para crear el usuario",
+                    errorCode: EError.INVALID_BODY_JSON_ERROR
+                });
+            }
             try {
                 const user = await UserService.getUserByEmail(username);
-                console.log("Usuario autenticado:", user);
                 if(user){
                     return done(null, false);
                 } 
