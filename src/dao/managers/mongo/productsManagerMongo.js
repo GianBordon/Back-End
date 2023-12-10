@@ -10,8 +10,7 @@ export class ProductsManagerMongo {
             const result = await this.model.create(productInfo);
             return result;
         } catch (error) {
-            console.log("createProduct: ", error.message);
-            throw new Error("Se produjo un error al crear el producto");
+            return {status:"error", error:error};
         };
     };
 // Metodo para obtener los productos 

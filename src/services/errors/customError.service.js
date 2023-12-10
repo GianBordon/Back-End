@@ -3,7 +3,7 @@ export class CustomError{
         const error = new Error(message, {cause});
         error.name = name;
         error.code = errorCode;
-        console.log("CustomError", error);
+        // console.log("CustomError", error);
         return error;
     };
 }

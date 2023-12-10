@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CartController } from '../controllers/carts.controller.js';
-import { checkRole } from "../middlewares/auth.js";
+import { isAuth,checkRole } from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.put('/:cid/products/:pid', CartController.updateQuantityCart);
 // Ruta para eliminar todos los productos del carrito
 router.delete('/:cid', CartController.deleteProductsCart);
 // Ruta para agregar un producto al carrito
-router.post("/:cid/products/:pid", checkRole(["user"]), CartController.addProductCart);
+router.post("/:cid/products/:pid",isAuth, checkRole(["user"]), CartController.addProductCart);
 // Ruta para generar un ticket
 router.post("/:cid/purchase", CartController.purchaseCart);
 

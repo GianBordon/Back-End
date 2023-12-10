@@ -6,7 +6,8 @@ export const config ={
     server:{
         secretSessions: process.env.SECRET_SESSIONS,
         persistence: process.env.PERSISTENCE,
-        port:process.env.PORT
+        port:process.env.PORT,
+        env:process.env.NODE_ENVIRONMENT || "development"
     },
     mongo:{
         url: process.env.MONGO_URL

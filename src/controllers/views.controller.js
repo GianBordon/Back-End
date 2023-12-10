@@ -1,6 +1,7 @@
 import { ProductService } from "../services/products.service.js"
 import { CartService } from "../services/carts.service.js";
 import { ProfileDto } from "../dao/dto/profile.dto.js";
+import { logger } from "../helpers/logger.js";
 
 export class ViewsController{
     
@@ -107,4 +108,12 @@ export class ViewsController{
             res.status(500).render("errorView", { error: "Error al obtener el perfil del usuario" });
         }
     };
+
+    static testLogger =  (req,res)=>{
+        logger.error("log error");
+        logger.advertencia("log advertencia");
+        logger.debbug("log debbug");
+        res.send("prueba logger");
+    };
+    
 }

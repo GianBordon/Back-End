@@ -9,7 +9,16 @@ export class SessionsController {
     };
 
     static login = async (req, res) => {
-        res.redirect("/")
+        // Verificar si la solicitud acepta JSON
+        const acceptsJSON = req.accepts('json');
+
+        if (acceptsJSON) {
+            // Si acepta JSON, devolver una respuesta JSON
+            res.json({ error: 'No se pudo iniciar sesión para el usuario' });
+        } else {
+            // Si no acepta JSON, redirigir a la vista
+            res.redirect("/");
+        }
     };
 
     static failLogin = (req,res)=>{

@@ -10,8 +10,7 @@ export class UsersManagerMongo{
             const result = await this.model.create(userInfo);
             return result;
         } catch (error) {
-            console.log("createUser: ", error.message);
-            throw new Error("Se produjo un error creando el usuario");
+            return {status:"error", error:error}
         }
     };
 

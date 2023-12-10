@@ -5,8 +5,8 @@ import { createHash, inValidPassword } from "../utils.js";
 import { usersModel } from "../dao/managers/mongo/models/users.model.js";
 import { config } from "./config.js";
 import { UserService } from "../services/users.service.js"
-import { CustomError } from "../services/customError.service.js";
-import { userCreateError } from "../services/userCreateError.service.js";
+import { CustomError } from "../services/errors/customError.service.js";
+import { userCreateError } from "../services/errors/userCreateError.service.js";
 import { EError } from "../enums/EError.js";
 
 export const initializePassport = () =>{

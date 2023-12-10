@@ -68,6 +68,7 @@ app.use("/api/mocks", mockRouter);
 
 // Midelware de Errores
 app.use(errorHandler);
+
 // Configurar WebSocket
 const io = new Server(httpServer);
 
