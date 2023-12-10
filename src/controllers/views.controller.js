@@ -50,7 +50,7 @@ export class ViewsController{
             }
             res.render("products", dataProducts);
         } catch (error) {
-            console.error("Error al recuperar los productos:", error);
+            logger.error("Error al recuperar los productos:", error);
             res.status(500).send("Error al recuperar los productos.");
         }
     };
@@ -62,7 +62,7 @@ export class ViewsController{
             const style = "productsDetail.css"
             res.render('productsDetail', { product, style }); 
         } catch (error) {
-            console.error('Error al obtener los detalles del producto:', error);
+            logger.error('Error al obtener los detalles del producto:', error);
             res.status(500).json({ status: 'error', message: 'Error al obtener los detalles del producto.' });
         }
     };
@@ -74,7 +74,7 @@ export class ViewsController{
             const style = "carrito.css"
             res.render('carrito', { cart, style });
         } catch (error) {
-            console.error('Error al obtener el carrito:', error);
+            logger.error('Error al obtener el carrito:', error);
             res.status(500).send('Error al obtener el carrito.');
         }
     };
@@ -84,7 +84,7 @@ export class ViewsController{
             const style = "loginView.css";
             res.render("loginView", {style});
         } catch (error) {
-            console.error("Error al recuperar los productos:", error);
+            logger.error("Error al recuperar los productos:", error);
             res.status(500).send("Error al recuperar los productos.");
         }
     };
@@ -104,7 +104,7 @@ export class ViewsController{
                 res.redirect("/loginView");
             }
         } catch (error) {
-            console.error("Error al obtener y procesar el perfil:", error);
+            logger.error("Error al obtener y procesar el perfil:", error);
             res.status(500).render("errorView", { error: "Error al obtener el perfil del usuario" });
         }
     };

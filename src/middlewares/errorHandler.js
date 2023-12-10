@@ -1,7 +1,8 @@
 import { EError } from "../enums/EError.js";
+import { logger } from "../helpers/logger.js";
 
 export const errorHandler = ( error, req,res,next) =>{
-    console.log("Codigo de error: ",error.code);
+    logger.error("Codigo de error: ",error.code);
     switch (error.code) {
         case EError.DATABASE_ERROR:
             res.json({status:"error", error:error.cause});

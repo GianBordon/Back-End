@@ -1,4 +1,5 @@
 import { usersModel } from "./models/users.model.js";
+import { logger } from "../../../helpers/logger.js";
 
 export class UsersManagerMongo{
     constructor(){
@@ -19,7 +20,7 @@ export class UsersManagerMongo{
             const result = await this.model.findById(userId).lean();
             return result;
         } catch (error) {
-            console.log("getUserById: ", error.message);
+            logger.error("getUserById: ", error.message);
             throw new Error("Se produjo un error obteniendo el usuario");
         }
     };
@@ -29,7 +30,7 @@ export class UsersManagerMongo{
             const result = await this.model.findOne({email:userEmail});
             return result;
         } catch (error) {
-            console.log("getUserByEmail: ", error.message);
+            logger.error("getUserByEmail: ", error.message);
             throw new Error("Se produjo un error obteniendo el usuario");
         }
     };

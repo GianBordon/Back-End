@@ -1,4 +1,5 @@
 import { productsModel } from "./models/products.model.js";
+import { logger } from "../../../helpers/logger.js";
 
 export class ProductsManagerMongo {
     constructor() {
@@ -19,7 +20,7 @@ export class ProductsManagerMongo {
             const result = await this.model.find().lean();
             return result;
         } catch (error) {
-            console.log("getProducts: ", error.message);
+            logger.error("getProducts: ", error.message);
             throw new Error("Se produjo un error al obtener los productos");
         };
     };
@@ -29,7 +30,7 @@ export class ProductsManagerMongo {
             const result = await this.model.paginate(query,options);
             return result;
         } catch (error) {
-            console.log("getProductsPaginate: ", error.message);
+            logger.error("getProductsPaginate: ", error.message);
             throw new Error("Se produjo un error al obtener los productos paginados");
         };
     };
@@ -39,7 +40,7 @@ export class ProductsManagerMongo {
             const result = await this.model.findById(productId).lean();
             return result;
         } catch (error) {
-            console.log("getProductById: ", error.message);
+            logger.error("getProductById: ", error.message);
             throw new Error("Se produjo un error al obtener el producto");
         };
     };
@@ -52,7 +53,7 @@ export class ProductsManagerMongo {
             }
             return result;
         } catch (error) {
-            console.log("updateProduct: ", error.message);
+            logger.error("updateProduct: ", error.message);
             throw new Error("Se produjo un error al actualizar el producto");
         };
     };
@@ -65,7 +66,7 @@ export class ProductsManagerMongo {
             };
             return result;
         } catch (error) {
-            console.log("deleteProduct: ", error.message);
+            logger.error("deleteProduct: ", error.message);
             throw new Error("Se produjo un error al eliminar el producto");
         };
     };

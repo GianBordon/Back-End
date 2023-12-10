@@ -3,6 +3,7 @@ import { transporter } from "../config/gmail.js";
 import path from "path";
 import { __dirname } from "../utils.js"
 import { twilioClient } from "../config/twilio.js";
+import { logger } from "../helpers/logger.js";
 
 export class MessagerController {
 
@@ -35,7 +36,7 @@ export class MessagerController {
             });
             res.json({ status: "success", data: result });
         } catch (error) {
-            console.log(error);
+            logger.error(error);
             res.status(500).json({ status: "error", message: error.message });
         }
     }
@@ -47,10 +48,10 @@ export class MessagerController {
                 to: process.env.USER_PHONE,
                 body:"Su pedido fue realizado correctamente"
             });
-            console.log(result);
+            logger.informativo(result);
             res.json({status:"success", message:"Envio de mensaje exitoso"});
         } catch (error) {
-            console.log(error);
+            logger.error(error);
             res.json({status:"error", message:"Hubo un error al enviar el mensaje de texto"})
         }
     }

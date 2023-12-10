@@ -11,6 +11,7 @@ import { Server } from 'socket.io';
 import { config  } from "./config/config.js";
 import { initializePassport } from "./config/passport.config.js";
 import { errorHandler } from './middlewares/errorHandler.js';
+import { logger } from './helpers/logger.js';
 
 import { viewsRouter } from './routes/views.routes.js';
 import { sessionsRouter } from "./routes/sessions.routes.js";
@@ -32,7 +33,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 //servidor de express con el protocolo http
-const httpServer = app.listen(port, () => console.log(`Servidor Express escuchando en el puerto ${port}`));
+const httpServer = app.listen(port, () => logger.informativo(`Servidor Express escuchando en el puerto ${port}`));
 
 //configuracion del motor de plantillas
 app.engine('.hbs', engine({extname: '.hbs'}));
@@ -49,7 +50,7 @@ app.use(session({
     resave:true,
     saveUninitialized:true
 }));
-console.log('Sesiones configuradas correctamente');
+logger.informativo('Sesiones configuradas correctamente');
 
 //configurar passport
 initializePassport();
@@ -73,5 +74,5 @@ app.use(errorHandler);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
-    console.log('Cliente Conectado:', socket.id);
+    logger.informativo('Cliente Conectado:', socket.id);
 });
