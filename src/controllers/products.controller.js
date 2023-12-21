@@ -18,6 +18,7 @@ export class ProductsController{
         try {
             const product = req.body;
             const { title, description, price, code, category, stock } = product;
+            const userId = req.user._id;
             if (!title || !description || !price || !code || !category || !stock) {
                 throw CustomError.createError({
                     name: "Create product error",
@@ -26,6 +27,7 @@ export class ProductsController{
                     errorCode: EError.INVALID_BODY_JSON_ERROR
                 });
             }
+            product.owner = userId;
             const result = await ProductService.createProducts(product);
             res.json({ status: "success", result });
         } catch (error) {
@@ -56,11 +58,16 @@ export class ProductsController{
 
     static deleteProduct = async(req,res)=>{
         try {
-            const productId = req.params.productId.toString();
-            const result = await ProductService.deleteProduct(productId);
-            res.json({status:"success", data:result});
+            const productId = req.params.productId;
+            const result = await ProductService.getProductById(productId);
+            if((req.user.role === "premium" && result.owner.toString() === req.user._id.toString()) || req.user.role === "admin"){
+                await ProductService.deleteProduct(productId);
+                res.json({status:"success",message:"producto eliminado"});
+            } else {
+                res.json({status:"error",message:"No tienes permisos para eliminar este producto"});
+            }
         } catch (error) {
-            res.status(500).json({status:"error", message:error.message});
+            res.json({status:"error",message:error.message});
         }
     };
-}
+};

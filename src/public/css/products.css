@@ -13,3 +13,7 @@
 .btn:hover{
   color: yellow;
 }
+
+.title{
+  text-align: center;
+}

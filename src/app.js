@@ -19,6 +19,7 @@ import { productsRouter } from './routes/products.routes.js';
 import { cartsRouter } from './routes/carts.routes.js';
 import { messagesRouter } from './routes/messages.routes.js';
 import { mockRouter } from './routes/mocks.routes.js';
+import { usersRouter } from "./routes/users.routes.js";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -65,6 +66,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/messages", messagesRouter);
+app.use("/api/users", usersRouter);
 app.use("/api/mocks", mockRouter);
 
 // Midelware de Errores

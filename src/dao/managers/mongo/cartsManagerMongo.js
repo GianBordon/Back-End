@@ -42,26 +42,30 @@ export class CartsManagerMongo {
     // Metodo para agregar un producto a un carrito segun el ID del carrito y el ID del producto
     async addProduct(cartId, productId) {
         try {
-            const cart = await this.getCartById(cartId);
-            const existingProduct = cart.products.find((product) => product.productId._id.toString() === productId);
-            // Verifico si existe el producto y agrego la cantidad entonces
-            if (existingProduct) {
-                existingProduct.quantity++;
-            } else {
-                const newProductCart = {
-                    productId: productId,
-                    quantity: 1
-                };
-                cart.products.push(newProductCart);
-            };
-
-            const result = await this.model.findByIdAndUpdate(cartId, cart, { new: true });
+            const result = await this.model.findOneAndUpdate(
+                { _id: cartId, 'products.productId': { $ne: productId } }, // Evitar duplicados
+                {
+                    $push: {
+                        products: {
+                            productId: productId,
+                            quantity: 1
+                        }
+                    }
+                },
+                { new: true }
+            );
+    
+            if (!result) {
+                throw new Error("No se pudo agregar el producto al carrito");
+            }
+    
             return result;
         } catch (error) {
             logger.error("addProduct: ", error.message);
             throw new Error("No se pudo agregar el producto al carrito");
-        };
-    };
+        }
+    }
+    
     // Metodo para eliminar un producto de un carrito segun su ID
     async deleteProduct(cartId, productId) {
         try {

@@ -55,6 +55,190 @@ export class ViewsController{
         }
     };
     
+    static showRemeras = async (req, res) => {
+        try {
+            const { limit = 12, page = 1, sort = 'asc', stock } = req.query;
+            const query = { category: 'Remeras' }; 
+            const sortOptions = {};
+            if (stock) {
+                query.stock = stock;
+            }
+            
+            if (sort === 'asc') {
+                sortOptions.price = 1; // Orden ascendente por precio
+            } else if (sort === 'desc') {
+                sortOptions.price = -1; // Orden descendente por precio
+            } else {
+                // Si el valor de `sort` no es válido, puedes establecer un valor predeterminado.
+                sortOptions.price = 1;
+            }
+            
+            const options = { limit,page,sort: sortOptions,lean: true};
+            const result = await ProductService.getProductsPaginate(query,options);
+            const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+            const dataProducts = {
+                status: "success",
+                payload: result.docs,
+                totalPages: result.totalPages,
+                prevPage: result.prevPage,
+                nextPage: result.nextPage,
+                page: result.page,
+                hasPrevPage: result.hasPrevPage,
+                hasNextPage: result.hasNextPage,
+                prevLink: result.hasPrevPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.prevPage}`)}` : null,
+                nextLink: result.hasNextPage ? baseUrl.includes("page") ?
+                baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`) : baseUrl.concat(`?page=${result.nextPage}`) : null
+            };
+            if (req.session.email) {
+                dataProducts.userEmail = req.session.email;
+                dataProducts.userRole = req.session.role;
+                dataProducts.userName = req.session.first_name;
+            }
+            res.render("products", dataProducts);
+        } catch (error) {
+            logger.error("Error al recuperar los productos:", error);
+            res.status(500).send("Error al recuperar los productos.");
+        }
+    };
+
+    static showPantalones = async (req, res) => {
+        try {
+            const { limit = 12, page = 1, sort = 'asc', stock } = req.query;
+            const query = { category: 'Pantalones' }; 
+            const sortOptions = {};
+            if (stock) {
+                query.stock = stock;
+            }
+            
+            if (sort === 'asc') {
+                sortOptions.price = 1; // Orden ascendente por precio
+            } else if (sort === 'desc') {
+                sortOptions.price = -1; // Orden descendente por precio
+            } else {
+                // Si el valor de `sort` no es válido, puedes establecer un valor predeterminado.
+                sortOptions.price = 1;
+            }
+            
+            const options = { limit,page,sort: sortOptions,lean: true};
+            const result = await ProductService.getProductsPaginate(query,options);
+            const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+            const dataProducts = {
+                status: "success",
+                payload: result.docs,
+                totalPages: result.totalPages,
+                prevPage: result.prevPage,
+                nextPage: result.nextPage,
+                page: result.page,
+                hasPrevPage: result.hasPrevPage,
+                hasNextPage: result.hasNextPage,
+                prevLink: result.hasPrevPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.prevPage}`)}` : null,
+                nextLink: result.hasNextPage ? baseUrl.includes("page") ?
+                baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`) : baseUrl.concat(`?page=${result.nextPage}`) : null
+            };
+            if (req.session.email) {
+                dataProducts.userEmail = req.session.email;
+                dataProducts.userRole = req.session.role;
+                dataProducts.userName = req.session.first_name;
+            }
+            res.render("products", dataProducts);
+        } catch (error) {
+            logger.error("Error al recuperar los productos:", error);
+            res.status(500).send("Error al recuperar los productos.");
+        }
+    };
+
+    static showBuzos = async (req, res) => {
+        try {
+            const { limit = 12, page = 1, sort = 'asc', stock } = req.query;
+            const query = { category: 'Buzos' }; 
+            const sortOptions = {};
+            if (stock) {
+                query.stock = stock;
+            }
+            
+            if (sort === 'asc') {
+                sortOptions.price = 1; // Orden ascendente por precio
+            } else if (sort === 'desc') {
+                sortOptions.price = -1; // Orden descendente por precio
+            } else {
+                // Si el valor de `sort` no es válido, puedes establecer un valor predeterminado.
+                sortOptions.price = 1;
+            }
+            
+            const options = { limit,page,sort: sortOptions,lean: true};
+            const result = await ProductService.getProductsPaginate(query,options);
+            const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+            const dataProducts = {
+                status: "success",
+                payload: result.docs,
+                totalPages: result.totalPages,
+                prevPage: result.prevPage,
+                nextPage: result.nextPage,
+                page: result.page,
+                hasPrevPage: result.hasPrevPage,
+                hasNextPage: result.hasNextPage,
+                prevLink: result.hasPrevPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.prevPage}`)}` : null,
+                nextLink: result.hasNextPage ? baseUrl.includes("page") ?
+                baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`) : baseUrl.concat(`?page=${result.nextPage}`) : null
+            };
+            if (req.session.email) {
+                dataProducts.userEmail = req.session.email;
+                dataProducts.userRole = req.session.role;
+                dataProducts.userName = req.session.first_name;
+            }
+            res.render("products", dataProducts);
+        } catch (error) {
+            logger.error("Error al recuperar los productos:", error);
+            res.status(500).send("Error al recuperar los productos.");
+        }
+    };
+
+    static showSweater = async (req, res) => {
+        try {
+            const { limit = 12, page = 1, sort = 'asc', stock } = req.query;
+            const query = { category: 'Sweater' }; 
+            const sortOptions = {};
+            if (stock) {
+                query.stock = stock;
+            }
+            
+            if (sort === 'asc') {
+                sortOptions.price = 1; // Orden ascendente por precio
+            } else if (sort === 'desc') {
+                sortOptions.price = -1; // Orden descendente por precio
+            } else {
+                // Si el valor de `sort` no es válido, puedes establecer un valor predeterminado.
+                sortOptions.price = 1;
+            }
+            
+            const options = { limit,page,sort: sortOptions,lean: true};
+            const result = await ProductService.getProductsPaginate(query,options);
+            const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+            const dataProducts = {
+                status: "success",
+                payload: result.docs,
+                totalPages: result.totalPages,
+                prevPage: result.prevPage,
+                nextPage: result.nextPage,
+                page: result.page,
+                hasPrevPage: result.hasPrevPage,
+                hasNextPage: result.hasNextPage,
+                prevLink: result.hasPrevPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.prevPage}`)}` : null,
+                nextLink: result.hasNextPage ? baseUrl.includes("page") ?
+                baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`) : baseUrl.concat(`?page=${result.nextPage}`) : null
+            };
+            if (req.session.email) {
+                dataProducts.userEmail = req.session.email;
+                dataProducts.userRole = req.session.role;
+                dataProducts.userName = req.session.first_name;
+            }
+            res.render("products", dataProducts);
+        } catch (error) {
+            logger.error("Error al recuperar los productos:", error);
+            res.status(500).send("Error al recuperar los productos.");
+        }
+    };
+
     static getDetailsProduct = async (req, res) => {
         try {
             const productId = req.params.productId; 
@@ -116,4 +300,12 @@ export class ViewsController{
         res.send("prueba logger");
     };
     
+    static forgotPassword = (req,res)=>{
+        res.render("forgotPassView")
+    }
+
+    static resetPassword = (req, res)=>{
+        const token = req.query.token;
+        res.render("resetPassView",{token})
+    }
 }

@@ -24,5 +24,9 @@ router.get(config.github.callbackUrl, passport.authenticate("signupGithubStrateg
 }), SessionsController.failSignUpGitHub);
 // Ruta de Logout
 router.get("/logout", SessionsController.logOut);
+//Ruta pora el olvido de la contraseña 
+router.post("/forgot-password", SessionsController.forgotPassword);
+//Ruta pora restablecer la contraseña 
+router.post("/reset.password", SessionsController.resetPassword);
 
 export {router as sessionsRouter};

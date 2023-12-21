@@ -10,8 +10,11 @@ export class UserService{
         return usersDao.getUserById(userId);
     };
 
-    static getUserByEmail = (userEmail) =>{
-        return usersDao.getUserByEmail(userEmail);
+    static getUserByEmail = (email) =>{
+        return usersDao.getUserByEmail(email);
     };
 
+    static updateUser = (id, user)=>{
+        return usersDao.updateUser(id, user);
+    };
 }

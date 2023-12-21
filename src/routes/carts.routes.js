@@ -19,7 +19,7 @@ router.put('/:cid/products/:pid', CartController.updateQuantityCart);
 // Ruta para eliminar todos los productos del carrito
 router.delete('/:cid', CartController.deleteProductsCart);
 // Ruta para agregar un producto al carrito
-router.post("/:cid/products/:pid",isAuth, checkRole(["user"]), CartController.addProductCart);
+router.post("/:cid/products/:pid",isAuth, checkRole(["user", "premium"]), CartController.addProductCart);
 // Ruta para generar un ticket
 router.post("/:cid/purchase", CartController.purchaseCart);
 

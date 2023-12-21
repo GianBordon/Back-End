@@ -78,17 +78,30 @@ export class CartController {
         }
     };
 
-    static addProductCart = async(req,res)=>{
+    static addProductCart = async (req, res) => {
         try {
-            const {cid:cartId,pid:productId} = req.params;
+            const { cid: cartId, pid: productId } = req.params;
             const cart = await CartService.getCartById(cartId);
-            const product = await ProductService.getProduct(productId);
-            const result = await CartService.addProduct(cartId,productId);
-            res.json({status:"success", result});
+            const product = await ProductService.getProductById(productId);
+    
+            // Verificar si el usuario es premium y si el producto le pertenece
+            if (
+                req.user.role === "premium" &&
+                product.owner.toString() === req.user._id.toString()
+            ) {
+                return res.json({
+                    status: "error",
+                    message: "No puedes agregar tu propio producto al carrito como usuario premium.",
+                });
+            }
+    
+            const result = await CartService.addProduct(cartId, productId);
+            res.json({ status: "success", result });
         } catch (error) {
-            res.json({error:error.message});
+            res.json({ error: error.message });
         }
     };
+    
 
     static purchaseCart = async(req,res)=>{
         const ticketProducts = [];

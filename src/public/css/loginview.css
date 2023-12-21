@@ -1,3 +1,14 @@
 .title{
     text-align: center;
 }
+
+.btn-custom {
+    width: 350px;
+    margin: 10px 0 ;
+}
+
+.divider {
+    border-bottom: 2px solid #f0f0f0; 
+    margin: 10px 0; 
+    width: 100%; 
+}
