@@ -1,28 +1,21 @@
-import { Router } from 'express';
-import { CartController } from '../controllers/carts.controller.js';
-import { isAuth,checkRole } from "../middlewares/auth.js";
+import express from "express";
+import { checkRole } from "../middlewares/auth.js";
+import { CartsController } from "../controllers/carts.controller.js";
 
-const router = Router();
+const router = express.Router();
 
-// Ruta para obtener todos los carritos
-router.get("/", CartController.getCarts);
-// Ruta para crear un nuevo carrito
-router.post("/", CartController.createCart);
-// Ruta para obtener los productos de un carrito
-router.get("/:cid", CartController.getCartById);
-// Ruta para eliminar un producto del carrito
-router.delete('/:cid/products/:pid', CartController.deleteProductCart);
-// Ruta para actualizar el carrito con un arreglo de productos
-router.put('/:cid', CartController.updateCart);
-// Ruta para actualizar la cantidad de un producto en el carrito
-router.put('/:cid/products/:pid', CartController.updateQuantityCart);
-// Ruta para eliminar todos los productos del carrito
-router.delete('/:cid', CartController.deleteProductsCart);
-// Ruta para agregar un producto al carrito
-router.post("/:cid/products/:pid",isAuth, checkRole(["user", "premium"]), CartController.addProductCart);
-// Ruta para generar un ticket
-router.post("/:cid/purchase", CartController.purchaseCart);
+router.get("/", CartsController.getCarts);
+router.post("/", CartsController.createCart);
+
+router.get("/:cid", CartsController.getCartById);
+router.delete("/:cid", CartsController.deleteProductsCart);
+router.put("/:cid", CartsController.updateCart);
+
+router.delete("/:cid/products/:pid/delete", CartsController.deleteProductCart);
+router.put("/:cid/products/:pid/update", CartsController.updateQuantityCart);
+router.post("/:cid/products/:pid/add", checkRole(["user", "premium"]), CartsController.addProductCart);
 
 export { router as cartsRouter };
+
 
 

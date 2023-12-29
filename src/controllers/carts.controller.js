@@ -4,7 +4,7 @@ import { TicketService } from "../services/ticket.service.js";
 import {v4 as uuidv4} from 'uuid';
 
 
-export class CartController {
+export class CartsController {
 
     static getCarts = async(req,res)=>{
         try {

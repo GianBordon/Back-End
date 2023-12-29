@@ -1,0 +1,251 @@
+paths:
+  /api/products/:
+    post:
+      summary: Endpoint para crear un producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/createUpdateProduct"
+      responses:
+        "200":
+          description: Creación del producto exitoso
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/SuccessCreateProduct"
+        "401":
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/ErrorAuthorization"
+        "500":
+          description: Fallo del servidor
+
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos se obtuvieron correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":
+          description: Hubo un problema en el servidor
+
+  /api/products/{productId}:
+    get:
+      summary: Obtener la información de un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: El ID del producto a consultar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Se obtuvo correctamente la información del producto
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Products"
+        "500":
+          description: Hubo un problema en el servidor
+
+    put:
+      summary: Actualizar un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: El ID del producto a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/createUpdateProduct"
+      responses:
+        "200":
+          description: Se actualizó correctamente el producto
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/UpdateSuccess"
+        "500":
+          description: Hubo un problema en el servidor
+
+    delete:
+      summary: Eliminar un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: El ID del producto a eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Eliminación del producto exitosa
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/DeleteSuccess"
+        "500":
+          description: Hubo un problema en el servidor
+
+components:
+  schemas:
+    UpdateSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      example:
+        status: success
+        message: User updated
+
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id generado por la base de datos (requerido*)
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Cantidad de stock del producto
+        category:
+          type: string
+          description: Categoría del producto
+        status:
+          type: string
+          description: Estado del producto
+        thumbnail:
+          type: string
+          description: URL de la foto del producto
+        owner:
+          type: string
+          description: id generado por la base de datos del usuario que creó el producto
+      example:
+        _id: ObjectId("652220ed9f419079066193d0")
+        title: Dragon Ball Bulma Sweater
+        description: |-
+          ✔ Tejido y confeccionado en talleres éticamente responsables en Buenos Aires.
+          ✔ Tejido con la técnica jacquard, su dibujo fue realizado en la trama durante su tejido.
+          Esto permite que el dibujo dure tanto como la prenda misma.
+          ✔ Utilizamos 100% hilo importado 50% Algodón / 50% Acrílico
+          ✔ No decolora, no pica, no deforma
+        code: SEW003
+        price: 44.899
+        stock: 30
+        category: Sweater
+        status: true
+        thumbnail: https://acdn.mitiendanube.com/stores/026/096/products/tifn-dragon-ball321501-87593b10a8f9295bfa16874523153616-640-0.webp
+        owner: ObjectId("65806c6fa17b32fc39e40ecc")
+
+    SuccessCreateProduct:
+      type: object
+      properties:
+        status:
+          type: string
+        result:
+          type: object
+      example:
+        status: "success"
+        result:
+          title: "Camisa"
+
+    ErrorAuthorization:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Usuario no autorizado"
+
+    DeleteSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      example:
+        status: success
+        message: Product deleted
+
+  requestBodies:
+    createUpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        code:
+          type: string
+        stock:
+          type: number
+        category:
+          type: string
+        status:
+          type: string
+        thumbnail:
+          type: string
+        owner:
+          type: string
+      example:
+        title: "Cartoon Network Dexter Remera"
+        description: |-
+          ✔ Realizada en algodón con estampa serigráfica
+          ✔ Estampado y confeccionado en talleres éticamente responsables en Buenos Aires.
+          ✔ No decolora y es súper fácil de lavar en el lavarropas con agua fría
+        price: 18.899
+        code: REM011
+        category: Remeras
+        stock: 30
+        status: true
+        thumbnail: https://acdn.mitiendanube.com/stores/026/096/products/this-is-feliz-navidad-lookbook-23303441-19743d81d551749acd16853904305597-640-0.webp
+        owner: 65806c6fa17b32fc39e40ecc
+
+
+
+
+
+
+
+        
