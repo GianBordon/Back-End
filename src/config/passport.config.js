@@ -12,39 +12,45 @@ import { EError } from "../enums/EError.js";
 export const initializePassport = () =>{
     // Estrategia de registro de usuario 
     passport.use("signupLocalStrategy", new localStrategy(
-        {
-            passReqToCallback:true,
-            usernameField: "email",
-        },
-        async (req,username,password,done)=>{
-            const {first_name,last_name,age} = req.body;
-            if(!first_name || !last_name || !age || !username){
-                CustomError.createError({
-                    name:"Create user error",
-                    cause: userCreateError(req.body),
-                    message:"Datos invalidos para crear el usuario",
-                    errorCode: EError.INVALID_BODY_JSON_ERROR
-                });
-            }
-            try {
-                const user = await UserService.getUserByEmail(username);
-                if(user){
-                    return done(null, false);
-                } 
-                const newUser = {
-                    first_name,
-                    last_name,
-                    age,
-                    email:username,
-                    password:createHash(password)
-                };
-                const userCreated = await UserService.createUser(newUser);
-                return done(null, userCreated);
-            } catch (error) {
-                return done(error)
-            }
+    {
+        passReqToCallback: true,
+        usernameField: "email",
+    },
+    async (req, username, password, done) => {
+        const { first_name, last_name, age } = req.body;
+        if (!first_name || !last_name || !age || !username) {
+            CustomError.createError({
+                name: "Create user error",
+                cause: userCreateError(req.body),
+                message: "Datos invalidos para crear el usuario",
+                errorCode: EError.INVALID_BODY_JSON_ERROR
+            });
         }
-        ));
+
+        try {
+            const user = await UserService.getUserByEmail(username);
+            if (user) {
+                return done(null, false);
+            }
+
+            const newUser = {
+                first_name,
+                last_name,
+                age,
+                email: username,
+                password: createHash(password)
+            };
+
+            const userCreated = await UserService.createUser(newUser);
+            
+            // Devuelve el usuario recién creado en caso de éxito
+            return done(null, userCreated);
+        } catch (error) {
+            return done(error);
+        }
+    }
+));
+
     // Estrategia de logueo de usuario 
     passport.use("loginLocalStrategy", new localStrategy(
         {

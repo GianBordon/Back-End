@@ -78,3 +78,5 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
     logger.informativo('Cliente Conectado:', socket.id);
 });
+
+export {app};
