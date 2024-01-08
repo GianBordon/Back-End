@@ -7,9 +7,9 @@ import { productsModel } from "../src/dao/managers/mongo/models/products.model.j
 const requester = supertest(app);
 
 describe("Testing Cart Routes", function () {
-    let userCookie; // Variable para almacenar la cookie de la sesión
-    let createdProductId; // Variable para almacenar el ID del producto creado
-    let createdCartId; // Variable para almacenar el ID del carrito creado
+    let userCookie; 
+    let createdProductId; 
+    let createdCartId; 
 
     before(async function () {
         await usersModel.deleteMany({});
@@ -105,34 +105,66 @@ describe("Testing Cart Routes", function () {
         expect(response.body.data).to.have.length.at.least(1);
     });
     
+
+    it("POST /api/carts/:cid/products/:pid should add a product to the cart", async function () {
+        // Iniciar sesión y crear el primer producto
+        const mockUser1 = {
+            first_name: "John",
+            last_name: "Doe",
+            age: 30,
+            email: "john.doe@example.com",
+            password: "password123"
+        };
     
-    // ...
+        const response1 = await requester.post("/api/sessions/signup").send(mockUser1);
+        expect(response1.body).to.not.have.property("error");
+        const userCookie1 = response1.header["set-cookie"];
+        expect(userCookie1).to.exist;
+    
+        const newProduct = {
+            title: "Sweater de Lana",
+            description: "Sweater abrigador para días fríos",
+            price: 49.99,
+            code: "S0054",
+            category: "Sweater",
+            stock: 20,
+        };
 
-it("POST /api/carts/:cid/products/:pid should add a product to the cart", async function () {
-    const cartsResponse = await requester.get("/api/carts").set("Cookie", userCookie);
-    const cartId = cartsResponse.body.data[0]._id; // Tomar el primer carrito de la respuesta
-
-    // Crear un nuevo producto para agregar al carrito
-    const newProductResponse = await requester.post("/api/products").set("Cookie", userCookie).send({
-        title: "Camiseta de algodón",
-        description: "Camiseta cómoda para uso diario",
-        price: 19.99,
-        code: "C001",
-        category: "Remeras",
-        stock: 30,
+        const response = await requester.post("/api/products").set("Cookie", userCookie).send(newProduct);
+        expect(response.body).to.have.property("status").equal("success");
+        expect(response.body).to.have.property("result");
+        expect(response.body.result).to.have.property("_id");
+        createdProductId = response.body.result._id;
+    
+        // Iniciar sesión con otro usuario y crear un carrito
+        const mockUser2 = {
+            first_name: "Jane",
+            last_name: "Doe",
+            age: 25,
+            email: "jane.doe@example.com",
+            password: "password456"
+        };
+    
+        const response3 = await requester.post("/api/sessions/signup").send(mockUser2);
+        expect(response3.body).to.not.have.property("error");
+        const userCookie2 = response3.header["set-cookie"];
+        expect(userCookie2).to.exist;
+    
+        const response4 = await requester.post("/api/carts").set("Cookie", userCookie2);
+        expect(response4.body).to.have.property("status").equal("success");
+        expect(response4.body).to.have.property("data").that.is.an("object");
+        const createdCartId = response4.body.data._id;
+    
+        // Agregar el producto al carrito
+        const response5 = await requester.post(`/api/carts/${createdCartId}/products/${createdProductId}`).set("Cookie", userCookie2);
+        console.log("response5.body:", response5.body);
+    
+        expect(response5.body).to.have.property("status").equal("success");
+        expect(response5.body).to.have.property("data").that.is.an("object");
+        expect(response5.body.data).to.have.property("_id").equal(createdCartId);
     });
-
-    const productId = newProductResponse.body.result._id;
-
-    // Agregar el producto al carrito
-    const addToCartResponse = await requester.post(`/api/carts/${cartId}/products/${productId}`).set("Cookie", userCookie);
-
-    expect(addToCartResponse.body).to.have.property("status").equal("success");
-    expect(addToCartResponse.body).to.have.property("data").that.is.an("object");
-    expect(addToCartResponse.body.data).to.have.property("_id").equal(cartId);
-});
-
-// ...
+    
+    
 
     
     
