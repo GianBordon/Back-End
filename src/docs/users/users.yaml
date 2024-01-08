@@ -1,0 +1,48 @@
+paths:
+  /api/users/premium/{uid}:
+    put:
+      summary: Actualizar el rol de un usuario a premium
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Actualización del rol de usuario exitosa
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/UpdateUserRoleSuccess"
+        "401":
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/ErrorAuthorization"
+        "500":
+          description: Fallo del servidor
+
+components:
+  schemas:
+    UpdateUserRoleSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      example:
+        status: "success"
+        message: "Rol de usuario actualizado a premium"
+
+    ErrorAuthorization:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Usuario no autorizado"

@@ -12,6 +12,8 @@ import { config  } from "./config/config.js";
 import { initializePassport } from "./config/passport.config.js";
 import { errorHandler } from './middlewares/errorHandler.js';
 import { logger } from './helpers/logger.js';
+import { swaggerSpecs } from './config/swagger.config.js';
+import swaggerUI from "swagger-ui-express";
 
 import { viewsRouter } from './routes/views.routes.js';
 import { sessionsRouter } from "./routes/sessions.routes.js";
@@ -67,6 +69,7 @@ app.use('/api/carts', cartsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/docs", swaggerUI.serve , swaggerUI.setup(swaggerSpecs));
 app.use("/api/mocks", mockRouter);
 
 // Midelware de Errores

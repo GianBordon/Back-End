@@ -1,0 +1,178 @@
+paths:
+  /api/sessions/signup:
+    post:
+      summary: Endpoint para registrar a un usuario
+      tags:
+        - Autenticacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/Signup"
+      responses:
+        "200":
+          description: Registro exitoso
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/SignupSuccess"
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/fail-signup:
+    get:
+      summary: Endpoint para manejar fallos en el registro
+      tags:
+        - Autenticacion
+      responses:
+        "200":
+          description: Fallo en el registro
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/login:
+    post:
+      summary: Endpoint para loguear al usuario
+      tags:
+        - Autenticacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/Login"
+      responses:
+        "200":
+          description: Logueo exitoso
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/fail-login:
+    get:
+      summary: Endpoint para manejar fallos en el login
+      tags:
+        - Autenticacion
+      responses:
+        "200":
+          description: Fallo en el login
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/signup-github:
+    get:
+      summary: Endpoint para solicitar registro con GitHub
+      tags:
+        - Autenticacion
+      responses:
+        "200":
+          description: Redirección a GitHub para registro
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/logout:
+    get:
+      summary: Endpoint para cerrar sesión
+      tags:
+        - Autenticacion
+      responses:
+        "200":
+          description: Sesión cerrada exitosamente
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/forgot-password:
+    post:
+      summary: Endpoint para solicitar restablecimiento de contraseña
+      tags:
+        - Autenticacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/ForgotPassword"
+      responses:
+        "200":
+          description: Solicitud de restablecimiento de contraseña exitosa
+        "500":
+          description: El servidor está fallando
+
+  /api/sessions/reset-password:
+    post:
+      summary: Endpoint para restablecer la contraseña
+      tags:
+        - Autenticacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/ResetPassword"
+      responses:
+        "200":
+          description: Contraseña restablecida exitosamente
+        "500":
+          description: El servidor está fallando
+
+components:
+  schemas:
+    SignupSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      example:
+        status: "success"
+        message: "Registro exitoso"
+
+  requestBodies:
+    Signup:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Correo del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+      example:
+        email: pepe@gmal.com
+        password: coder
+
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Correo del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+      example:
+        email: pepe@gmal.com
+        password: coder
+
+    ForgotPassword:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Correo del usuario
+      example:
+        email: pepe@gmal.com
+
+    ResetPassword:
+      type: object
+      properties:
+        password:
+          type: string
+          description: Nueva contraseña
+        confirmPassword:
+          type: string
+          description: Confirmación de la nueva contraseña
+      example:
+        password: newcoder
+        confirmPassword: newcoder
