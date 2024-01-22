@@ -3,11 +3,12 @@ import { Router } from "express";
 import { config } from "../config/config.js";
 import { SessionsController } from "../controllers/sessions.controller.js";
 import { ViewsController } from "../controllers/views.controller.js";
+import { uploadProfile } from "../utils.js";
 
 const router = Router();
 
 // Rutas de registro
-router.post('/signup',passport.authenticate("signupLocalStrategy",{
+router.post('/signup', uploadProfile.single("avatar"),passport.authenticate("signupLocalStrategy",{
     failureRedirect:"/api/sessions/fail-signup",
     }), SessionsController.signUp);
 router.get('/fail-signup', SessionsController.failSignUp);

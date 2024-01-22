@@ -19,6 +19,8 @@ export class ProductsController{
             const product = req.body;
             const { title, description, price, code, category, stock } = product;
             const userId = req.user._id;
+            const thumbnailFileName = req.file.filename;
+            product.thumbnail = thumbnailFileName;
             if (!title || !description || !price || !code || !category || !stock) {
                 throw CustomError.createError({
                     name: "Create product error",

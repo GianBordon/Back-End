@@ -11,6 +11,7 @@ export const checkRole = (roles) => {
     };
 };
 
+
 export const isAuth = (req,res,next)=>{
     if(!req.user){
         return res.json({status:"error", message:"Debes Iniciar Sesion para realizar esta operacion"})

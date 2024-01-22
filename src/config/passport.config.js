@@ -8,6 +8,7 @@ import { UserService } from "../services/users.service.js"
 import { CustomError } from "../services/errors/customError.service.js";
 import { userCreateError } from "../services/errors/userCreateError.service.js";
 import { EError } from "../enums/EError.js";
+import { usersDao } from "../dao/factory.js";
 
 export const initializePassport = () =>{
     // Estrategia de registro de usuario 
@@ -26,7 +27,6 @@ export const initializePassport = () =>{
                 errorCode: EError.INVALID_BODY_JSON_ERROR
             });
         }
-
         try {
             const user = await UserService.getUserByEmail(username);
             if (user) {
@@ -38,12 +38,10 @@ export const initializePassport = () =>{
                 last_name,
                 age,
                 email: username,
-                password: createHash(password)
+                password: createHash(password),
+                avatar:req.file.filename
             };
-
             const userCreated = await UserService.createUser(newUser);
-            
-            // Devuelve el usuario recién creado en caso de éxito
             return done(null, userCreated);
         } catch (error) {
             return done(error);
@@ -65,6 +63,8 @@ export const initializePassport = () =>{
                 if(!inValidPassword(password,user)){
                     return done(null,false);
                 }
+                user.last_connection = new Date();
+                await usersDao.updateUser(user._id, user);
                 return done(null,user);
             } catch (error) {
                 return done(error)

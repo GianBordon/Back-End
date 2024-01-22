@@ -4,7 +4,7 @@
                 <div class="card-body">
                     <h1 class="card-title title">Página de Registro</h1>
                     <p style="color: red;">{{error}}</p>
-                    <form method="post" action="/api/sessions/signup">
+                    <form method="post" action="/api/sessions/signup" enctype="multipart/form-data">
                         <div class="mb-3">
                             <input type="text" class="form-control" name="first_name" placeholder="Tu nombre" />
                         </div>
@@ -19,6 +19,9 @@
                         </div>
                         <div class="mb-3">
                             <input type="password" class="form-control" name="password" placeholder="Tu Contraseña" />
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" name="avatar"/>
                         </div>
                             <div class="d-flex flex-row justify-content-between">
                                 <button type="submit" class="btn btn-primary btn-custom flex-fill">Registrarse con Correo </button>
