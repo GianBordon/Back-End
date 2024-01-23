@@ -6,3 +6,6 @@ papelera.txt
 
 #Credenciales
 .env
+
+#Testing
+/test
