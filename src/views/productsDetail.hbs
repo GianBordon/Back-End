@@ -1,25 +1,26 @@
+<div class="containerr">
 <div class="container product-container border shadow p-3 mb-5 bg-white rounded">
-    <div class="row">
+    <div class="product-info">
         <!-- Columna izquierda para el título y detalles -->
-        <div class="col-md-6 d-flex flex-column justify-content-between">
-            <div>
-                <h2 class="product-title">{{product.title}}</h2>
-                <div class="product-text mt-5">
-                    <p class="product-description">Descripción: {{product.description}}</p>
-                    <p>Categoría: {{product.category}}</p>
-                    <p>Stock: {{product.stock}}</p>
-                    <p class="product-price">Precio: ${{product.price}}</p>
-                </div>
+        <div class="product-details">
+            <h2 class="product-title">{{product.title}}</h2>
+            <div class="product-text mt-5">
+                <p class="product-description">Descripción: {{product.description}}</p>
+                <p>Categoría: {{product.category}}</p>
+                <p>Stock: {{product.stock}}</p>
+                <p class="product-price">Precio: ${{product.price}}</p>
             </div>
-            <form action="/carts/{{cartId}}/products/{{this._id}}" method="POST" class="mt-3">
-                <button type="submit" class="btn btn-primary btn-block">Agregar al carrito</button>
-            </form>
+            <div class="container-btn">
+                <form action="/carts/{{cartId}}/products/{{product._id}}" method="POST" class="mt-3 d-flex justify-content-center">
+                    <input type="hidden" name="productId" value="{{product._id}}">
+                    <button type="submit" class="btn btn-primary btn-container">Agregar al carrito</button>
+                </form>
+            </div>
         </div>
         <!-- Columna derecha para la imagen -->
-        <div class="col-md-6">
-            <img class="product-image w-100" src="{{product.thumbnail}}" alt="{{product.title}}">
+        <div class="product-image-container">
+            <img class="product-image" src="{{product.thumbnail}}" alt="{{product.title}}">
         </div>
     </div>
 </div>
-
-<script src="/js/productsDetail.js"></script>
+</div>

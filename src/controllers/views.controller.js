@@ -1,4 +1,5 @@
-import { ProductService } from "../services/products.service.js"
+import { ProductService } from "../services/products.service.js";
+import { UserService } from "../services/users.service.js";
 import { CartService } from "../services/carts.service.js";
 import { ProfileDto } from "../dao/dto/profile.dto.js";
 import { logger } from "../helpers/logger.js";
@@ -251,18 +252,6 @@ export class ViewsController{
         }
     };
     
-    static getCart = async (req, res) => {
-        try {
-            const cartId = req.params.cid;
-            const cart = await CartService.getCartById(cartId);
-            const style = "carrito.css"
-            res.render('carrito', { cart, style });
-        } catch (error) {
-            logger.error('Error al obtener el carrito:', error);
-            res.status(500).send('Error al obtener el carrito.');
-        }
-    };
-    
     static getProducts = async (req, res) => {
         try {
             const style = "loginView.css";
@@ -308,4 +297,49 @@ export class ViewsController{
         const token = req.query.token;
         res.render("resetPassView",{token})
     }
+
+    static showUsers = async (req, res) => {
+        try {
+            const users = await UserService.getAllUsers();
+            const isAdmin = req.session.role === 'admin'; // Verificar si el usuario es administrador
+            res.cookie('isAdmin', isAdmin); // Establecer una cookie con el rol del usuario
+            res.render("users", { users });
+        } catch (error) {
+            logger.error("Error al recuperar los usuarios:", error);
+            res.status(500).send("Error al recuperar los usuarios.");
+        }
+    };
+    
+    static addProductToCart = async (req, res) => {
+        try {
+            const { cid: cartId, pid: productId } = req.params;
+            await CartService.addProduct(cartId, productId);
+            res.redirect(`/carts/${cartId}`);
+        } catch (error) {
+            logger.error("Error al agregar producto al carrito:", error);
+            res.status(500).send("Error al agregar producto al carrito.");
+        }
+    };
+
+    static removeProductFromCart = async (req, res) => {
+        try {
+            const { cid: cartId, pid: productId } = req.params;
+            await CartService.deleteProduct(cartId, productId);
+            res.redirect(`/carts/${cartId}`);
+        } catch (error) {
+            logger.error("Error al eliminar producto del carrito:", error);
+            res.status(500).send("Error al eliminar producto del carrito.");
+        }
+    };
+
+    static purchaseCart = async(req,res)=>{
+        try {
+            const { cid: cartId } = req.params;
+            await CartService.purchaseCart(cartId);
+            res.redirect(`/carts/${cartId}`);
+        } catch (error) {
+            logger.error("Error al realizar la compra:", error);
+            res.status(500).send("Error al realizar la compra.");
+        }
+    };
 }

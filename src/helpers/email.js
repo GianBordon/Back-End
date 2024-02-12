@@ -32,6 +32,56 @@ export const sendChangePasswordEmail = async(req,userEmail,token) =>{
     });
 };
 
+export const sendAccountDeletionEmail = async (userEmail) => {
+    try {
+        await transporter.sendMail({
+            from: "DREAMWEAVERSTYLES",
+            to: userEmail,
+            subject: "Eliminación de cuenta por inactividad",
+            html: `
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; text-align: center;">
+                    <h2 style="color: #55595c;">Eliminación de Cuenta por Inactividad</h2>
+                    <p>Tu cuenta en DREAMWEAVERSTYLES ha sido eliminada debido a inactividad.</p>
+                    <p>Si no solicitaste la eliminación de tu cuenta o deseas recuperarla, por favor contacta con nosotros a través de nuestro sitio web.</p>
+                    <p>¡Gracias por tu comprensión!</p>
+                    <p style="font-style: italic;">Saludos,<br>The DREAMWEAVERSTYLES Team</p>
+                </div>
+            `
+        });
+
+        logger.informativo(`Correo electrónico de eliminación de cuenta enviado a ${userEmail}`);
+    } catch (error) {
+        logger.error(`Error al enviar el correo electrónico de eliminación de cuenta a ${userEmail}: ${error.message}`);
+        throw new Error(`Error al enviar el correo electrónico de eliminación de cuenta: ${error.message}`);
+    }
+};
+
+export const sendProductDeletionEmail = async (userEmail, productName) => {
+    try {
+        await transporter.sendMail({
+            from: "DREAMWEAVERSTYLES",
+            to: userEmail,
+            subject: "Eliminación de Producto",
+            html: `
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; text-align: center;">
+                    <h2 style="color: #55595c;">Producto Eliminado</h2>
+                    <p>El producto "${productName}" en DREAMWEAVERSTYLES ha sido eliminado.</p>
+                    <p>Si no solicitaste la eliminación de este producto o tienes alguna pregunta, por favor contacta con nosotros a través de nuestro sitio web.</p>
+                    <p>¡Gracias por tu comprensión!</p>
+                    <p style="font-style: italic;">Saludos,<br>The DREAMWEAVERSTYLES Team</p>
+                </div>
+            `
+        });
+
+        logger.informativo(`Correo electrónico de eliminación de producto enviado a ${userEmail}`);
+    } catch (error) {
+        logger.error(`Error al enviar el correo electrónico de eliminación de producto a ${userEmail}: ${error.message}`);
+        throw new Error(`Error al enviar el correo electrónico de eliminación de producto: ${error.message}`);
+    }
+};
+
+
+
 export const verifyEmailToken = (token) =>{
     try {
         const info = jwt.verify(token, config.gmail.secretToken);

@@ -17,4 +17,12 @@ export class UserService{
     static updateUser = (id, user)=>{
         return usersDao.updateUser(id, user);
     };
+
+    static getAllUsers = () => {
+        return usersDao.getAllUsers();
+    };
+
+    static deleteInactiveUsers = (inactiveSince) => {
+        return usersDao.deleteInactiveUsers(inactiveSince);
+    };
 }

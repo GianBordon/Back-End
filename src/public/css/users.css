@@ -1,0 +1,12 @@
+.container-lg {
+    max-width: 1200px; /* Ajusta el tamaño máximo según sea necesario */
+    margin: auto;
+}
+
+.mb-3 {
+    margin-bottom: 1rem; /* Espacio adicional entre la opción de modificar el rol y los botones */
+}
+
+.btn-group {
+    margin-top: 1rem; /* Espacio adicional entre los botones y el resto del contenido */
+}

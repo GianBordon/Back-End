@@ -7,6 +7,7 @@ import { logger } from "../helpers/logger.js";
 
 export class MessagerController {
 
+    // Método para enviar un mensaje por correo electrónico
     static sendMessageByEmail = async (req, res) => {
         const emailTemplate = `<div>
             <h1>Bienvenido!!</h1>
@@ -41,6 +42,7 @@ export class MessagerController {
         }
     }
 
+    // Método para enviar un mensaje por SMS
     static sendMessageBySms = async(req,res)=>{
         try {
             const result = await twilioClient.messages.create({
@@ -48,7 +50,7 @@ export class MessagerController {
                 to: process.env.USER_PHONE,
                 body:"Su pedido fue realizado correctamente"
             });
-            logger.informativo(result);
+            logger.info(result);
             res.json({status:"success", message:"Envio de mensaje exitoso"});
         } catch (error) {
             logger.error(error);

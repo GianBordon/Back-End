@@ -5,7 +5,9 @@ import { uploadDocuments } from "../utils.js";
 
 const router = Router();
 
+router.get("/", UsersController.getAllUsers);
 router.put("/premium/:uid", checkRole(["admin"]), UsersController.modifyRole );
 router.post("/:uid/documents", isAuth, uploadDocuments.fields([{name:"identificacion", maxCount:1}, {name:"domicilio", maxCount:1}, {name:"estadoDeCuenta", maxCount:1} ]), UsersController.uploadUserDocuments);
+router.delete("/", UsersController.deleteInactiveUsers);
 
 export { router as usersRouter};

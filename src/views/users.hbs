@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/css/users.css">
+<div class="container-lg"> <!-- Hacer más grande la caja contenedora -->
+    <h1 class="title">Lista de Usuarios</h1>
+    <div class="row">
+        {{#each users}}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card mb-4">
+                <!-- Información del usuario -->
+                <div class="card-body">
+                    <h5 class="card-title"><strong>{{this.first_name}} {{this.last_name}}</strong></h5> <!-- Nombre de usuario en negrita -->
+                    <p class="card-text">Correo electrónico: <b>{{this.email}}</b></p>
+                    <p class="card-text">Rol: <b>{{this.role}}</b></p>
+                    <!-- Botones para modificar el rol y eliminar -->
+                    <div class="form-group mb-3"> <!-- Espacio adicional para la opción de modificar el rol -->
+                        <select id="roleSelect_{{this._id}}" class="form-control">
+                            <option value="user">User</option>
+                            <option value="premium">Premium</option>
+                        </select>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary mr-2" onclick="modifyRole('{{this._id}}')">Modificar Rol</button> <!-- Separación adicional entre los botones -->
+                        <button type="button" class="btn btn-danger" onclick="deleteUser('{{this._id}}')">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<script src="/js/users.js"></script>

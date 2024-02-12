@@ -53,15 +53,15 @@ const documentsStorage = multer.diskStorage({
 
 const uploadDocuments = multer({storage:documentsStorage});
 
-const imgProductsStorage = multer.diskStorage({
-    destination: function(req,file,cb){
-        cb(null, path.join(__dirname,"/multer/products/img"))
-    },
-    filename: function(req,file,cb){
-        cb(null, `${req.body.code}-product-${file.originalname}`)
-    },
-});
+// const imgProductsStorage = multer.diskStorage({
+//     destination: function(req,file,cb){
+//         cb(null, path.join(__dirname,"/multer/products/img"))
+//     },
+//     filename: function(req,file,cb){
+//         cb(null, `${req.body.code}-product-${file.originalname}`)
+//     },
+// });
 
-const uploadImgProducts = multer({storage:imgProductsStorage});
+// const uploadImgProducts = multer({storage:imgProductsStorage});
 
-export { uploadProfile , uploadDocuments, uploadImgProducts}
+export { uploadProfile , uploadDocuments}

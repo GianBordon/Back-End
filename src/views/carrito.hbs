@@ -1,22 +1,17 @@
-<h1 class="title">Detalles del Carrito</h1>
-<p class="sub-title">ID del Carrito: {{cart._id}}</p>
-
-<div class="product-list">
-    <ul class="product-cards">
+    <h1>Carrito de Compras</h1>
+    <div class="products">
         {{#each cart.products}}
-        <li class="product-card">
-            <img src="{{this.productId.thumbnail}}" alt="{{this.productId.title}}">
-            <div class="product-details">
-                <h5 class="product-title">{{this.productId.title}}</h5>
-                <p class="product-price">Precio: ${{this.productId.price}}</p>
+            <div class="product">
+                <h2>{{this.productId.name}}</h2>
+                <p>Precio: {{this.productId.price}}</p>
+                <p>Cantidad: {{this.quantity}}</p>
+                <form action="/carrito/{{../cart._id}}/producto/{{this.productId._id}}/eliminar" method="POST">
+                    <button type="submit">Eliminar</button>
+                </form>
             </div>
-        </li>
         {{/each}}
-    </ul>
-</div>
-
-<script src="/js/carrito.js"></script>
-
-
-
+    </div>
+    <form action="/carrito/{{cart._id}}/comprar" method="POST">
+        <button type="submit">Comprar</button>
+    </form>
 
